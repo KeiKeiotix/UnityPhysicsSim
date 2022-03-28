@@ -9,6 +9,7 @@ public class Ragdoll : MonoBehaviour
 
     private Animator animator = null;
     public List<Rigidbody> rigidbodies = new List<Rigidbody>();
+    public bool ragdollOnClick = true;
 
     public bool RagdollOn
     {
@@ -30,10 +31,19 @@ public class Ragdoll : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+
+        Rigidbody[] childBones = GetComponentsInChildren<Rigidbody>();
+
+        foreach(Rigidbody thisBone in childBones)
+        {
+            rigidbodies.Add(thisBone);
+        }
+
+        RagdollOn = true;
         foreach (Rigidbody r in rigidbodies)
         {
             {
-            r.isKinematic = true;
+                r.isKinematic = true;
             }
         }
     }

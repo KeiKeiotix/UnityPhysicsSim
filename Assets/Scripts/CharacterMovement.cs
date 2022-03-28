@@ -6,15 +6,21 @@ public class CharacterMovement : MonoBehaviour
 {
     public float speed = 10;
     public float jumpHeight = 2;
-    public GameObject camera;
+    public GameObject cam;
 
     public Vector3 hitDirection;
     public float slideTolerence = 0.1f;
+
+    public float pushStrength = 0.01f; //Currently used for hitting a gate, also doesnt seem to do anything at all
 
     Vector3 velocity;
     CharacterController cc;
     Vector2 moveInput = new Vector2();
     bool jumpInput;
+
+
+
+    //Left click
 
 
     // Start is called before the first frame update
@@ -29,6 +35,13 @@ public class CharacterMovement : MonoBehaviour
         moveInput.x = Input.GetAxis("Horizontal");
         moveInput.y = Input.GetAxis("Vertical");
         jumpInput = Input.GetButton("Jump");
+
+        
+        //Check for left click, to make ragdoll ragdoll
+        if(Input.GetMouseButtonDown(0))
+        {
+            this.GetComponent<RaytraceFromCam>().TryClickRagdoll();
+        }
     }
 
     void FixedUpdate()
@@ -36,11 +49,11 @@ public class CharacterMovement : MonoBehaviour
         Vector3 delta;
 
         //move same direction as camera
-        Vector3 camForward = camera.transform.forward;
+        Vector3 camForward = cam.transform.forward;
         camForward.y = 0;
         camForward.Normalize();
 
-        delta = (moveInput.x * camera.transform.right + moveInput.y * camForward).normalized * speed;
+        delta = (moveInput.x * cam.transform.right + moveInput.y * camForward).normalized * speed;
 
       
 
@@ -78,15 +91,18 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
-
-
-
         cc.Move((velocity + delta) * Time.deltaTime); ;
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         hitDirection = hit.point - transform.position;
+
+        if (hit.rigidbody != null)
+        {
+            hit.rigidbody.AddForceAtPosition(hitDirection.normalized * pushStrength, hit.point, ForceMode.Force);
+             
+        }
     }
 
 }

@@ -5,13 +5,14 @@ using UnityEngine;
 public class PlayerTrigger : MonoBehaviour
 {
 
-    Ragdoll ragdoll;
+    public Ragdoll ragdoll;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<R
+        //GetComponent<R
     }
 
     // Update is called once per frame
@@ -22,6 +23,11 @@ public class PlayerTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        
+        if(other.gameObject.GetComponent<CharacterMovement>() != null)
+        {
+            //Debug.Log("Hit a character");
+
+            ragdoll.RagdollOn = ragdoll.RagdollOn == true ? false : true;
+        }
     }
 }

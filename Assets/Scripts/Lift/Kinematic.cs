@@ -49,7 +49,7 @@ public class Kinematic : MonoBehaviour
     {
         if (other.gameObject.GetComponent<CharacterMovement>() != null)
         {
-            //other.transform.SetParent(null, true);
+            other.transform.SetParent(null, true);
         }
     }
 

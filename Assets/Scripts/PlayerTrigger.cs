@@ -12,7 +12,7 @@ public class PlayerTrigger : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //GetComponent<R
+        
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class PlayerTrigger : MonoBehaviour
         {
             //Debug.Log("Hit a character");
 
-            ragdoll.RagdollOn = ragdoll.RagdollOn == true ? false : true;
+            ragdoll.RagdollOn = true;
         }
     }
 }

@@ -90,7 +90,7 @@ public class CharacterMovement : MonoBehaviour
                 velocity -= 0.2f * horizontalHitDirection / displacement;
             }
         }
-
+        Debug.Log(cc.isGrounded);
         cc.Move((velocity + delta) * Time.deltaTime); ;
     }
 
